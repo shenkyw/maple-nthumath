@@ -25,21 +25,21 @@ SO =	admutil.so aloha.so bank.so chat.so help.so innbbs.so manage.so newbrd.so \
 .o.so:	;  ld -s -G $*.o -o $*.so -L../lib -ldao
 
 
-all: 
-	@echo "Please enter 'make sys-type', "
-	@echo " make sun     : for Sun-OS 4.x and maybe some BSD systems, cc or gcc" 
-	@echo " make linux   : for Linux"
-	@echo " make solaris : for Sun-OS 5.x gcc" 
-	@echo " make sol-x86 : for Solaris 7 x86"
-	@echo " make freebsd : for BSD 4.4 systems"
-	@echo " make bsd     : for BSD systems, cc or gcc, if not in the above lists"
-	@echo " make cygwin  : for Microsoft Windows and Cygwin gcc"
+all: linux
+#	@echo "Please enter 'make sys-type', "
+#	@echo " make sun     : for Sun-OS 4.x and maybe some BSD systems, cc or gcc" 
+#	@echo " make linux   : for Linux"
+#	@echo " make solaris : for Sun-OS 5.x gcc" 
+#	@echo " make sol-x86 : for Solaris 7 x86"
+#	@echo " make freebsd : for BSD 4.4 systems"
+#	@echo " make bsd     : for BSD systems, cc or gcc, if not in the above lists"
+#	@echo " make cygwin  : for Microsoft Windows and Cygwin gcc"
 
 sun:
 	@$(MAKE) CC=gcc CFLAGS="-O2 -pipe -fomit-frame-pointer -Wunused -I../include" $(SO)
 
 linux:
-	@$(MAKE) CC=gcc CFLAGS="-DLINUX -O2 -pipe -fomit-frame-pointer -Wunused -I../include" $(SO)
+	@$(MAKE) CC=gcc-3.3 CFLAGS="-DLINUX -O2 -pipe -fomit-frame-pointer -Wunused -I../include" $(SO)
 
 solaris:
 	@$(MAKE) CC=gcc CFLAGS="-DSOLARIS -DSYSV -O2 -pipe -fomit-frame-pointer -Wunused -I../include" $(SO)

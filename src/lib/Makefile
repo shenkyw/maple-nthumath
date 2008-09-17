@@ -8,7 +8,7 @@
 # ------------------------------------------------------ #
 
 
-CC	= gcc
+CC	= gcc-3.3
 RANLIB	= ranlib
 CPROTO	= cproto -E"gcc -pipe -E" -I../include # -s -v
 CFLAGS	= -O2 -s -pipe -fomit-frame-pointer -Wunused -I../include
