@@ -14,15 +14,15 @@
 # lib daemon innbbsd maple so game pip util util/backup util/tran util/uno
 
 
-all:
-	@echo "Please enter 'make sys-type', "
-	@echo " make sun     : for Sun-OS 4.x and maybe some BSD systems, cc or gcc"
-	@echo " make linux   : for Linux"
-	@echo " make solaris : for Sun-OS 5.x gcc"
-	@echo " make sol-x86 : for Solaris 7 x86"
-	@echo " make freebsd : for BSD 4.4 systems"
-	@echo " make bsd     : for BSD systems, cc or gcc, if not in the above lists"
-	@echo " make cygwin  : for Microsoft Windows and Cygwin gcc"
+all: linux
+#	@echo "Please enter 'make sys-type', "
+#	@echo " make sun     : for Sun-OS 4.x and maybe some BSD systems, cc or gcc"
+#	@echo " make linux   : for Linux"
+#	@echo " make solaris : for Sun-OS 5.x gcc"
+#	@echo " make sol-x86 : for Solaris 7 x86"
+#	@echo " make freebsd : for BSD 4.4 systems"
+#	@echo " make bsd     : for BSD systems, cc or gcc, if not in the above lists"
+#	@echo " make cygwin  : for Microsoft Windows and Cygwin gcc"
 
 
 sun:
