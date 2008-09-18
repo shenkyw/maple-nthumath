@@ -113,6 +113,51 @@ is_locked(lock_type)
 #define ATS_PERM_SECRET       01000000
 
 /* ----------------------------------------------------- */
+/* →合併推文 by Shenk						 */
+/* ----------------------------------------------------- */
+int
+f_cp_suggest(src, dst, mode)
+  char *src, *dst;
+  int mode;			/* O_EXCL / O_APPEND / O_TRUNC */
+{
+  int fsrc, fsuggest, fdst, ret;
+  char suggest[AFNLEN-2+8];
+
+  str_cat(suggest,src,".suggest");
+
+  ret = 0;
+
+  if ((fsrc = open(src, O_RDONLY)) >= 0 & (fsuggest = open(suggest, O_RDONLY)) >= 0)
+  {
+    ret = -1;
+
+    if ((fdst = open(dst, O_WRONLY | O_CREAT | mode, 0600)) >= 0)
+    {
+      char pool[BLK_SIZ];
+
+      src = pool;
+      do
+      {
+	ret = read(fsrc, src, BLK_SIZ);
+	if (ret <= 0)
+	  break;
+      } while (write(fdst, src, ret) > 0);
+
+      do
+      {
+	ret = read(fsuggest, src, BLK_SIZ);
+	if (ret <= 0)
+	  break;
+      } while (write(fdst, src, ret) > 0);
+
+      close(fdst);
+    }
+    close(fsrc);
+    close(fsuggest);
+  }
+  return ret;
+}
+/* ----------------------------------------------------- */
 /* 轉換主程式						 */
 /* ----------------------------------------------------- */
 
@@ -200,10 +245,17 @@ transbrd(bh)
 	hdr.xmode = (fh.filemode & 0x2) ? POST_MARKED : 0;
 	hdr.xmode += is_locked(fh.report) ? POST_RESTRICT : 0;
 	/*=====→更改完畢=====*/
+	/*=====→文章分數=====*/
+	if(fh.goodpost)
+	{
+	  hdr.score = fh.goodpost;
+	  hdr.xmode += POST_SCORE;
+	}
+	/*=====→更改完畢=====*/
 	rec_add(folder, &hdr, sizeof(HDR));
 
 	/* 拷貝檔案 */
-	f_cp(buf, fpath, O_TRUNC);
+	(fh.goodpost) ? f_cp_suggest(buf, fpath, O_TRUNC) : f_cp(buf, fpath, O_TRUNC);//→合併推文
       }
     }
     close(fd);
