@@ -85,7 +85,24 @@ trans_hdr_stamp(folder, t, hdr, fpath)
     }
   }
 }
+/* ----------------------------------------------------- */
+/* →文章權限考慮 by Shenk						 */
+/*		參考原src/so/lock_post.c 約於25~36是重點	*/
+/* ----------------------------------------------------- */
+static int
+is_locked(lock_type)
+ char lock_type;
+{
+  /*int lock_level;*/
+  char lock_level[9] = "plsabcde";
+  int i;
 
+  for(i = 0 ; i < 8 ; i++) {
+    if(lock_type == lock_level[i]) return 1/*lock_level = i + 1*/;
+  }
+
+  return 0;
+}
 
 /* ----------------------------------------------------- */
 /* 轉換主程式						 */
@@ -166,7 +183,10 @@ transbrd(bh)
 	trans_hdr_stamp(folder, chrono, &hdr, fpath);
 	str_ncpy(hdr.owner, fh.owner, sizeof(hdr.owner));
 	str_ansi(hdr.title, fh.title, sizeof(hdr.title));
+	/*=====→文章權限=====*/
 	hdr.xmode = (fh.filemode & 0x2) ? POST_MARKED : 0;
+	hdr.xmode += is_locked(fh.report) ? POST_RESTRICT : 0;
+	/*=====→更改完畢=====*/
 	rec_add(folder, &hdr, sizeof(HDR));
 
 	/* 拷貝檔案 */
