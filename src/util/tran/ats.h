@@ -25,11 +25,11 @@
 #include "bbs.h"
 
 /* --------------------- 請注意 這五者只能擇一定義 ---------------------- */
-#define  NEW_STATION                  /* 定義為 新建/標準 站台            */
+#undef  NEW_STATION                  /* 定義為 新建/標準 站台            */
 #undef   OLD_ATSVERSION               /* 定義為舊的亞站版本 (1.20a 以後)  */
                                       /* 欲讓舊版本使用最小使用者資料結構 */
                                       /* 必需執行轉換程式 single_multi_st */
-#undef   TRANS_FROM_SOB               /* 定義為沙灘轉換                   */
+#define   TRANS_FROM_SOB               /* 定義為沙灘轉換                   */
 #undef   TRANS_FROM_FB3               /* 定義為火鳥轉換                   */
 #undef   TRANS_FROM_COLA              /* 定義為可樂轉換                   */
 /* ---------------------------------------------------------------------- */
@@ -50,6 +50,10 @@
 
 #undef HAVE_PERSONAL_GEM                       /* SOB 是沒有個人精華區的 */
 
+/*==*/
+#define  NO_USE_MULTI_STATION          /* 定義是否 "不使用" 多站系統功能 */
+#define CHANGE_USER_MAIL_LIMIT     /* 如不想彈性變更使用者信箱上限 請反定義 */
+/*==*/
 
 #define ASTRLEN   80             /* Length of most string data */
 #define ABTLEN    48             /* Length of board title */
@@ -63,7 +67,7 @@
 #define AREGLEN   38             /* Length of registration data */
 
 /* ----------------------------------------------------- */
-/* .PASSWDS struct : 1024 bytes                          */
+/* .PASSWDS release full struct : 1024 bytes             */
 /* ----------------------------------------------------- */
 
 struct userec {
@@ -171,16 +175,53 @@ struct userec {
 
 #ifdef TRANS_FROM_COLA
   usint staytime;
+
   #ifdef CHANGE_USER_MAIL_LIMIT
-    int backup_int[41];
+    time_t last_post_time;
+    time_t count_time;
+    int post_number;
+    unsigned int reject_me_time;
+
+    usint five_win;
+    usint five_lose;
+    usint five_tie;
+
+    int backup_int[34];
   #else
-    int backup_int[43];
+    time_t last_post_time;
+    time_t count_time;
+    int post_number;
+    unsigned int reject_me_time;
+
+    usint five_win;
+    usint five_lose;
+    usint five_tie;
+
+    int backup_int[36];
   #endif
 #else
   #ifdef CHANGE_USER_MAIL_LIMIT
-    int backup_int[42];
+    time_t last_post_time;
+    time_t count_time;
+    int post_number;
+    unsigned int reject_me_time;
+
+    usint five_win;
+    usint five_lose;
+    usint five_tie;
+
+    int backup_int[35];
   #else
-    int backup_int[44];
+    time_t last_post_time;
+    time_t count_time;
+    int post_number;
+    unsigned int reject_me_time;
+
+    usint five_win;
+    usint five_lose;
+    usint five_tie;
+
+    int backup_int[37];
   #endif
 #endif
 
@@ -210,7 +251,8 @@ typedef struct userec userec;
 #ifndef TRANS_FROM_FB3          /* struct size = 256 bytes */
   #ifndef TRANS_FROM_COLA
 struct fileheader {
-  char filename[AFNLEN-1];       /* M.109876543210.A */
+  char filename[AFNLEN-2];       /* M.109876543210.A */
+  char outgo;                   /* 外轉與否 */
   char report;                  /* Dopin : 新制提報 */
   char savemode;                /* file save mode */
   char owner[AIDLEN + 2];        /* uid[.] */
@@ -221,7 +263,8 @@ struct fileheader {
 };
   #else
 struct fileheader {             /* For Cola BBS */
-  char filename[ASTRLEN];
+  char filename[ASTRLEN-1];
+  char outgo;                   /* 外轉與否 */
   char owner[ASTRLEN];
   char title[ASTRLEN];
   char date[6];                 /* 補上 for ATS/SOB */
@@ -234,7 +277,8 @@ struct fileheader {             /* For Cola BBS */
   #endif
 #else
 struct fileheader {             /* This structure is used to hold data in */
-  char filename[ASTRLEN-2];      /* the DIR files */
+  char filename[ASTRLEN-3];      /* the DIR files */
+  char outgo;                   /* 外轉與否 */
   char report;                  /* 亞站提報 */
   char savemode;                /* file save mode */
   char owner[ASTRLEN-6];
@@ -251,7 +295,7 @@ typedef struct fileheader fileheader;
 
 
 /* ----------------------------------------------------- */
-/* BOARDS struct : Standard 656 bytes                    */
+/* BOARDS struct : Release 656 bytes                    */
 /* ----------------------------------------------------- */
 
 struct boardheader {
@@ -269,6 +313,8 @@ struct boardheader {
   char sysop[16];
   char pastbrdname[16];
   char yankflags[16];
-  char backup[64];
+  char fete[31];
+  char outgo_mode;
+  char backup[32];
 };
 typedef struct boardheader boardheader;
