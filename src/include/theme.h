@@ -15,13 +15,13 @@
 /* 基本顏色定義，以利介面修改				 */
 /* ----------------------------------------------------- */
 
-#define COLOR1		"\033[34;46m"	/* footer/feeter 的前段顏色 */
-#define COLOR2		"\033[37;44m"	/* footer/feeter 的後段顏色 */
-#define COLOR3		"\033[37;44m"	/* neck 的顏色 */
-#define COLOR4		"\033[1;44m"	/* 光棒 的顏色 */
-#define COLOR5		"\033[34;47m"	/* more 檔頭的標題顏色 */
-#define COLOR6		"\033[37;44m"	/* more 檔頭的內容顏色 */
-#define COLOR7		"\033[1;34m"	/* 作者在線上的顏色 */
+#define COLOR1  	"\033[1;37;42m" /* footer/feeter 的前段顏色 */
+#define COLOR2  	"\033[;30;47m"  /* footer/feeter 的後段顏色 */
+#define COLOR3  	"\033[1;37;42m" /* neck 的顏色 */
+#define COLOR4  	"\033[1;32;44m" /* 光棒 的顏色 */
+#define COLOR5  	"\033[32;47m"   /* more 檔頭的標題顏色 */
+#define COLOR6  	"\033[37;42m"   /* more 檔頭的內容顏色 */
+#define COLOR7  	"\033[32m"  /* 作者在線上的顏色 */
 
 
 /* ----------------------------------------------------- */
@@ -45,7 +45,7 @@
 /* itoc.註解: 注意 MENU_XPOS 要 >= MENU_XNOTE + MOVIE_LINES */
 
 #define MENU_XNOTE	2		/* 動態看板由 (2, 0) 開始 */
-#define MOVIE_LINES	10		/* 動畫最多有 10 列 */
+#define MOVIE_LINES	11		/* 動畫最多有 11 列 */
 
 #define MENU_XPOS	13		/* 選單開始的 (x, y) 座標 */
 #define MENU_YPOS	((d_cols >> 1) + 18)
@@ -92,13 +92,13 @@
 			COLOR3 "  編號    日 期 作  者       新  聞  標  題%*s                                   \033[m"
 
 #define NECKER_XPOST	"\n" \
-			COLOR3 "  編號    日 期 作  者       文  章  標  題%*s                            評:%s  \033[m"
+                        COLOR3 "  編號     日 期 作  者       文  章  標  題%*s                           評:%s  \033[m"
 
 #define NECKER_MBOX	"[←]離開 [→,r]讀信 [d]刪除 [R,y](群組)回信 [s]寄信 [x]轉錄 [X]轉達 [h]說明\n" \
 			COLOR3 "  編號   日 期 作  者       信  件  標  題%*s                                    \033[m"
 
 #define NECKER_POST	"[←]離開 [→]閱\讀 [^P]發表 [b]進板畫面 [d]刪除 [V]投票 [TAB]精華區 [h]說明\n" \
-			COLOR3 "  編號    日 期 作  者       文  章  標  題%*s                 評:%s  人氣:%-4d  \033[m"
+                        COLOR3 "  編號     日 期 作  者       文  章  標  題%*s                評:%s  人氣:%-4d  \033[m"
 
 #define NECKER_GEM	"[←]離開 [→]瀏覽 [B]模式 [C]暫存 [F]轉寄 [d]刪除 [h]說明  %s\n" \
 			COLOR3 "  編號     主              題%*s                            [編      選] [日  期]\033[m"
@@ -116,7 +116,7 @@
 
 #define NECKER_INNBBS	"[←]離開 [^P]新增 [d]刪除 [E]編輯 [/]搜尋 [Enter]詳細\n" \
 			COLOR3 "  編號            內         容%*s                                               \033[m"
-
+			
 
 /* ----------------------------------------------------- */
 /* 訊息字串：more() 時的 footer 都抓出來定義在這	 */
@@ -219,25 +219,25 @@ COLOR1 " 轉信設定 " COLOR2 " (↑/↓)上下 (PgUp/PgDn)上下頁 (Home/End)首尾 (←)(q
 /* itoc: 建議 banner 不要超過三行，過長的站簽可能會造成某些使用者的反感 */
 
 #define EDIT_BANNER	"\n--\n" \
-			" \033[1;43m◤\033[46m◥\033[m Or\033[1mig\033[30min\033[m: \033[1;44m "SCHOOLNAME"˙"BBSNAME" \033[42m "MYHOSTNAME" \033[m\n" \
-			" \033[1;44m◣\033[41m◢\033[m A\033[1mut\033[30mho\033[mr: \033[1;34m%s\033[m 從 \033[1;31m%s\033[m 發表\n"
+			" \033[1;41m╔\033[44m╗\033[m O\033[1mri\033[30mgi\033[mn: \033[1;42m "SCHOOLNAME"˙"BBSNAME" \033[44m "MYHOSTNAME" \033[m\n" \
+			" \033[1;42m╚\033[45m╝\033[m Au\033[1mt\033[30mho\033[mr: \033[1;32m%s\033[m 從 \033[1;35m%s\033[m 發表\n"
 
-#define MODIFY_BANNER	" \033[1;45m▂\033[42m█\033[m \033[1mMo\033[30mdi\033[mfy: %s 於 \033[1;34m%s\033[m 修改\n"
+#define MODIFY_BANNER	" \033[1;43m╱\033[46m╲\033[m \033[1mMo\033[30mdi\033[mfy: %s 於 \033[1;32m%s\033[m 修改\n"
 
 
 /* ----------------------------------------------------- */
 /* 其他訊息字串						 */
 /* ----------------------------------------------------- */
 
-#define VMSG_NULL	"                           \033[1;33;46m ● 請按任意鍵繼續 ● \033[m"
+#define VMSG_NULL	"                            \033[1;32;45m● 請按任意鍵繼續 ●\033[m"
 
-#define ICON_UNREAD_BRD		"\033[1;33m˙\033[m"	/* 未讀看板 */
+#define ICON_UNREAD_BRD		"\033[32mˇ"		/* 未讀看板 */
 #define ICON_READ_BRD		"  "			/* 已讀看板 */
 
 #define ICON_GAMBLED_BRD	"\033[1;31m賭\033[m"	/* 舉行賭盤中的看板 */
 #define ICON_VOTED_BRD		"\033[1;33m投\033[m"	/* 舉行投票中的看板 */
-#define ICON_NOTRAN_BRD		"  "			/* 不轉信板 */
-#define ICON_TRAN_BRD		"轉"			/* 轉信板 */
+#define ICON_NOTRAN_BRD		"◎"			/* 不轉信板 */
+#define ICON_TRAN_BRD		"●"			/* 轉信板 */
 
 #define TOKEN_ZAP_BRD		'-'			/* zap 板 */
 #define TOKEN_FRIEND_BRD	'.'			/* 好友板 */
