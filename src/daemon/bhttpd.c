@@ -1932,7 +1932,7 @@ postlist_list(fpw, folder, brdname, start, total)
     "  <td width=10>m</td>\n"
 
 #ifdef HAVE_SCORE
-    "  <td width=10>&nbsp;</td>\n"
+    "  <td width=10>¢H</td>\n"
 #endif
 
     "  <td width=50>¤é´Á</td>\n"
@@ -1979,7 +1979,11 @@ postlist_list(fpw, folder, brdname, start, total)
 
 #ifdef HAVE_SCORE
       if (xmode & POST_SCORE)
-	fprintf(fpw, "<font color='%s'>%d</font>", hdr.score >= 0 ? "red" : "green", abs(hdr.score));
+//	fprintf(fpw, "<font color='%s'>%d</font>", hdr.score >= 0 ? "red" : "green", abs(hdr.score));
+    if ((hdr.score > 99) || (hdr.score < -99))
+           fprintf(fpw, "<font color='%s'>%s</font>", hdr.score >= 0 ? "red" : "green", hdr.score >=0 ? "Ãz" : "Äê");
+        else
+       fprintf(fpw, "<font color='%s'>%d</font>", hdr.score >= 0 ? "red" : "green", abs(hdr.score));
 #endif
 
       fprintf(fpw, "</td>\n  <td>%s</td>\n  <td><a href=%s%s>%s</a></td>\n",
