@@ -192,7 +192,7 @@ transbrd(bh)
   memset(&newboard, 0, sizeof(newboard));
   str_ncpy(newboard.brdname, bh->brdname, sizeof(newboard.brdname));
   str_ncpy(newboard.class, bh->title, sizeof(newboard.class));
-  str_ncpy(newboard.title, bh->title, sizeof(newboard.title));
+  str_ncpy(newboard.title, &(bh->title[7]), sizeof(newboard.title));//→版標題不含類別
 
   str_ncpy(newboard.BM, bh->BM, sizeof(newboard.BM));
   newboard.bstamp = stamp++;
