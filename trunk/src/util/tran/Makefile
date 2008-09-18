@@ -12,15 +12,7 @@
 # ------------------------------------------------------ #
 
 
-EXE =	brd2gem transacct transbrd \
-	ats2bmw ats2brd ats2gem ats2mf ats2pal ats2usr \
-	cola2brd cola2gem cola2post cola2usr \
-	fb2brd fb2gem fb2pal fb2usr \
-	mag2brd mag2gem mag2usr \
-	snap2usr snap2brd \
-	sob2brd sob2gem sob2pal sob2usr \
-	wd2bmw wd2brd wd2gem wd2list wd2mf wd2pal wd2pip wd2usr \
-	windtop2brd windtop2mf windtop2pip windtop2usr
+EXE =	ats2bmw ats2brd ats2gem ats2mf ats2pal ats2usr 
 
 all: linux
 #	@echo "Please enter 'make sys-type', "
