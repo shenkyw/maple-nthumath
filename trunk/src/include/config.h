@@ -25,17 +25,17 @@
 /* 定義 BBS 站名位址					 */
 /* ------------------------------------------------------*/
 
-#define SCHOOLNAME	"台南一中"		/* 組織名稱 */
-#define BBSNAME		"與南共舞"		/* 中文站名 */
-#define BBSNAME2	"WolfBBS"		/* 英文站名 */
-#define SYSOPNICK	"狼人長老"		/* sysop 的暱稱 */
+#define SCHOOLNAME	"清華數學"		/* 組織名稱 */
+#define BBSNAME		"樹大招風"		/* 中文站名 */
+#define BBSNAME2	"nthumath"		/* 英文站名 */
+#define SYSOPNICK	"站務"		/* sysop 的暱稱 */
 #define TAG_VALID       "["BBSNAME2"]To"	/* 身分認證函 token */
 
-#define MYIPADDR	"210.70.137.5"		/* IP address */
-#define MYHOSTNAME	"bbs.tnfsh.tn.edu.tw"	/* 網路地址 FQDN */
+#define MYIPADDR	"shenk.twbbs.org"		/* IP address */
+#define MYHOSTNAME	"shenk.twbbs.org"	/* 網路地址 FQDN */
 
 #define HOST_ALIASES	{MYHOSTNAME, MYIPADDR, \
-			 "wolf.twbbs.org", "wolf.twbbs.org.tw", \
+			 "shenk.twbbs.org", "shenk.twbbs.org.tw", \
 			 NULL}
 
 #define MYCHARSET	"big5"			/* BBS 所使用的字集 */
@@ -43,8 +43,8 @@
 #define BBSHOME		"/home/bbs"		/* BBS 的家 */
 #define BAKPATH		"/home/bbs/bak"		/* 備份檔的路徑 */
 
-#define BBSUID		9999
-#define BBSGID		99			/* Linux 請設為 999 */
+#define BBSUID		1002
+#define BBSGID		1003			/* Linux 請設為 999 */
 
 
 /* ----------------------------------------------------- */
@@ -166,7 +166,7 @@
 
 #define	ENHANCED_VISIT		/* itoc.010407: 已讀/未讀檢查是該看板的最後一篇決定 */
 
-#define	COLOR_HEADER            /* lkchu.981201: 變換彩色標頭 */
+#undef	COLOR_HEADER            /* lkchu.981201: 變換彩色標頭 */
 
 #define	CURSOR_BAR		/* itoc.010113: 選單光棒，若開啟選單光棒，選單就不能有顏色控制碼 */
 
@@ -401,7 +401,7 @@
 #define BMTA_PORT	25		/* SMTP   所用的 port (bmtad.c) */
 #define GEMD_PORT	70		/* Gopher 所用的 port (gemd.c) */
 #define FINGER_PORT	79		/* Finger 所用的 port (bguard.c) */
-#define BHTTP_PORT	80		/* HTTP   所用的 port (bhttpd.c) */
+#define BHTTP_PORT	8080		/* HTTP   所用的 port (bhttpd.c) */
 #define POP3_PORT	110		/* POP3   所用的 port (bpop3d.c) */
 #define BNNTP_PORT	119		/* NNTP   所用的 port (bnntp.c) */
 #define CHAT_PORT	3838		/* 聊天室 所用的 port (chat.c xchatd.c) */
