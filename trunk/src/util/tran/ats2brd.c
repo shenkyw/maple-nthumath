@@ -105,6 +105,14 @@ is_locked(lock_type)
 }
 
 /* ----------------------------------------------------- */
+/* →看板權限考慮 by Shenk						 */
+/*		參考原src/maple/board.c 1135~1180 	 */
+/*		   原src/include/perm.h 	*/
+/* ----------------------------------------------------- */
+#define ATS_PERM_ENTERSC       0400000
+#define ATS_PERM_SECRET       01000000
+
+/* ----------------------------------------------------- */
 /* 轉換主程式						 */
 /* ----------------------------------------------------- */
 
@@ -143,8 +151,13 @@ transbrd(bh)
 
   str_ncpy(newboard.BM, bh->BM, sizeof(newboard.BM));
   newboard.bstamp = stamp++;
-  newboard.battr = BRD_NOTRAN;				/* 預設不轉信 */
-  newboard.readlevel = 0;
+  newboard.battr = BRD_NOTRAN; /* 預設不轉信 */
+  /*=====→看板權限=====*/
+  if((bh->level & ATS_PERM_ENTERSC) || (bh->level & ATS_PERM_SECRET))
+    newboard.battr += (BRD_NOSTAT+BRD_NOVOTE);
+  newboard.readlevel = ( bh->level & ATS_PERM_ENTERSC ) ? PERM_BOARD : 0;
+  newboard.readlevel = ( bh->level & ATS_PERM_SECRET ) ? PERM_SYSOP : 0;
+  /*=====→更改完畢=====*/
   newboard.postlevel = PERM_POST;
 
   rec_add(FN_BRD, &newboard, sizeof(newboard));		/* 別忘了用 brd2gem.c 來轉換 Class */
