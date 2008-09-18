@@ -834,25 +834,31 @@ post_item(num, hdr)
   HDR *hdr;
 {
 #ifdef HAVE_SCORE
-  static char scorelist[36] =
-  {
-    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
-    'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
-    'U', 'V', 'W', 'X', 'Y', 'Z'
-  };
-
   prints("%6d%c%c", (hdr->xmode & POST_BOTTOM) ? -1 : num, tag_char(hdr->chrono), post_attr(hdr));
   if (hdr->xmode & POST_SCORE)
   {
     num = hdr->score;
-    prints("\033[1;3%cm%c\033[m ", num >= 0 ? '1' : '2', scorelist[abs(num)]);
+    if (abs(num) < 100)
+    {
+    prints("\033[1;3%cm%02d\033[m ", num >= 0 ? '1' : '2', abs(num));
+    }
+    else
+    {
+        if ( num < 0 )
+        {
+        prints("\033[1;32m爛\033[m " );
+        }
+        else
+        {
+        prints("\033[1;31m爆\033[m " );
+        }
+    }
   }
   else
   {
-    outs("  ");
+   outs("   ");
   }
-  hdr_outs(hdr, d_cols + 46);	/* 少一格來放分數 */
+  hdr_outs(hdr, d_cols + 44);	/* 少2格來放分數+一格排版 */
 #else
   prints("%6d%c%c ", (hdr->xmode & POST_BOTTOM) ? -1 : num, tag_char(hdr->chrono), post_attr(hdr));
   hdr_outs(hdr, d_cols + 47);
@@ -1964,12 +1970,12 @@ addscore(hdd, ram)
   hdd->xmode |= POST_SCORE;
   if (curraddscore > 0)
   {
-    if (hdd->score < 35)
+    if (hdd->score < 100)
       hdd->score++;
   }
   else
   {
-    if (hdd->score > -35)
+    if (hdd->score > -100)
       hdd->score--;
   }
 }
@@ -1999,24 +2005,33 @@ post_score(xo)
     return XO_NONE;
 #endif
 
-  switch (ans = vans("◎ 評分 1)推文 2)唾棄 3)自定推 4)自定呸？[Q] "))
+  switch (ans = vans("◎ 評分 1)推文 2)唾棄 3)說話 4)自定推 5)自定呸 6)自訂說？[Q] "))
   {
   case '1':
-    verb = "1m推";
+    verb = "31m推";
     vtlen = 2;
     break;
 
   case '2':
-    verb = "2m呸";
+    verb = "32m呸";
     vtlen = 2;
     break;
 
   case '3':
+    verb = "1;37m說";
+    vtlen = 2;
+    break;
+
   case '4':
-    if (!vget(b_lines, 0, "請輸入動詞：", fpath, 5, DOECHO))
+  case '5':
+  case '6':
+     if (!vget(b_lines, 0, "請輸入動詞：", fpath, 5, DOECHO))
       return XO_FOOT;
     vtlen = strlen(fpath);
-    sprintf(verb = vtbuf, "%cm%s", ans - 2, fpath);
+        if (ans == '6')
+          sprintf(verb = vtbuf, "1;37m%s", fpath);
+    else
+          sprintf(verb = vtbuf, "3%cm%s", ans - 3, fpath);
     break;
 
   default:
@@ -2025,10 +2040,10 @@ post_score(xo)
 
 #ifdef HAVE_ANONYMOUS
   if (currbattr & BRD_ANONYMOUS)
-    maxlen = 64 - IDLEN - vtlen;
+    maxlen = 61 - IDLEN - vtlen;
   else
 #endif
-    maxlen = 64 - strlen(cuser.userid) - vtlen;
+    maxlen = 61 - strlen(cuser.userid) - vtlen;
 
   if (!vget(b_lines, 0, "請輸入理由：", reason, maxlen, DOECHO))
     return XO_FOOT;
@@ -2043,7 +2058,7 @@ post_score(xo)
       userid = cuser.userid;
     else
       strcat(userid, ".");		/* 自定的話，最後加 '.' */
-    maxlen = 64 - strlen(userid) - vtlen;
+    maxlen = 61 - strlen(userid) - vtlen;
   }
   else
 #endif
@@ -2060,21 +2075,22 @@ post_score(xo)
     time(&now);
     ptime = localtime(&now);
 
-    fprintf(fp, "→ \033[36m%s \033[3%s\033[m：%-*s%02d/%02d/%02d\n", 
-      userid, verb, maxlen, reason, 
-      ptime->tm_year % 100, ptime->tm_mon + 1, ptime->tm_mday);
+    fprintf(fp,
+      "→ \033[36m%s \033[%s\033[m：%-*s\033[35m%02d/%02d %02d:%02d\033[m\n",
+      userid, verb, maxlen, reason,
+      ptime->tm_mon + 1, ptime->tm_mday, ptime->tm_hour, ptime->tm_min);
     fclose(fp);
   }
 
   curraddscore = 0;
-  if ((ans - '0') & 0x01)	/* 加分 */
+  if((ans == '1') || (ans == '4'))	/* 加分 */
   {
-    if (hdr->score < 35)
+    if (hdr->score < 100)
       curraddscore = 1;
   }
-  else				/* 扣分 */
+  else if ((ans == '2') || (ans == '5'))				/* 扣分 */
   {
-    if (hdr->score > -35)
+    if (hdr->score > -100)
       curraddscore = -1;
   }
 

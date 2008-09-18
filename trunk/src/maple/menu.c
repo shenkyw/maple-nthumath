@@ -267,7 +267,7 @@ vs_head(title, mid)
   prints("\033[1;4%cm¡i%s¡j%s\033[33m%s\033[1;37;4%cm%s¡m%s¡n\033[m\n",
     spc, title, buf, mid, spc, buf + len, currboard);
 #else
-  prints("\033[1;44m¡i%s¡j%s\033[33m%s\033[1;37;44m%s¡m%s¡n\033[m\n",
+  prints("\033[1;42m¡i%s¡j%s\033[33m%s\033[1;37;42m%s¡m%s¡n\033[m\n",
     title, buf, mid, buf + len, currboard);
 #endif
 }
