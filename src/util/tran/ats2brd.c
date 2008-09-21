@@ -157,6 +157,53 @@ f_cp_suggest(src, dst, mode)
   }
   return ret;
 }
+
+/* ----------------------------------------------------- */
+/* →備份招牌 by Shenk						 */
+/* ----------------------------------------------------- */
+
+static void
+gem_add(board, document /*owner, nick*/)
+  char *board, *document /**owner, *nick*/;
+{
+  //int cc;
+  //char *str;
+  char folder[64], fpath[64];
+  HDR hdr;
+  FILE *fp;
+
+  /* 寫入文章內容 */
+
+  gem_fpath(folder, board, FN_DIR);
+
+  if (fp = fdopen(hdr_stamp(folder, 'A', &hdr, fpath), "w"))
+  {
+    /*fprintf(fp, "發信人: %.50s 看板: %s\n", FROM, board);
+    fprintf(fp, "標  題: %.70s\n", SUBJECT);
+    fclose(fp);*/
+	fprintf(fp,"%s\n",document);
+	fprintf(fp,"%s\n",&document[80]);
+	fprintf(fp,"%s\n",&document[160]);
+	fprintf(fp,"%s\n",&document[240]);
+    fclose(fp);
+  }
+
+  /* 造 HDR */
+
+  hdr.xmode = 0;
+
+  /* Thor.980825: 防止字串太長蓋過頭 */
+  str_ncpy(hdr.owner, "轉換精靈", sizeof(hdr.owner));
+  str_ncpy(hdr.nick, "", sizeof(hdr.nick));
+  //str_stamp(hdr.date, &datevalue);	/* 依 DATE: 欄位的日期，與 hdr.chrono 不同步 */
+  str_ncpy(hdr.title, ">>>原樹大招風 - 看板小招牌", sizeof(hdr.title));
+
+  rec_bot(folder, &hdr, sizeof(HDR));
+
+  //update_btime(board);
+
+  //HISadd(MSGID, board, hdr.xname);
+}
 /* ----------------------------------------------------- */
 /* 轉換主程式						 */
 /* ----------------------------------------------------- */
@@ -212,6 +259,7 @@ transbrd(bh)
   sprintf(fpath, "gem/brd/%s", newboard.brdname);
   mak_dirs(fpath);
   mak_dirs(fpath + 4);
+  gem_add(newboard.brdname,bh->document);
 
   /* 轉換進板畫面 */
 
