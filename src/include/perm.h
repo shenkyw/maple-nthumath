@@ -24,7 +24,7 @@
 #define PERM_CLOAK	0x00000040
 #define PERM_XEMPT 	0x00000080
 
-#define	PERM_9		0x00000100
+#define	PERM_ART	0x00000100
 #define	PERM_10		0x00000200
 #define	PERM_11		0x00000400
 #define	PERM_12		0x00000800
@@ -111,7 +111,7 @@
 
 #define	NUMPERMS	32
 
-#define STR_PERM	"bctpjm#x-------@PTCM--L*B#-RACBS"	/* itoc: 新增權限的時候別忘了改這裡啊 */
+#define STR_PERM	"bctpjm#xa------@PTCM--L*B#-RACBS"	/* itoc: 新增權限的時候別忘了改這裡啊 */
 
 #ifdef _ADMIN_C_
 
@@ -126,7 +126,7 @@ static char *perm_tbl[NUMPERMS] =
   "隱身術",			/* PERM_CLOAK */
   "永久保留帳號",		/* PERM_XEMPT */
 
-  "保留",			/* PERM_9 */
+  "美工總管",			/* PERM_9 */
   "保留",			/* PERM_10 */
   "保留",			/* PERM_11 */
   "保留",			/* PERM_12 */

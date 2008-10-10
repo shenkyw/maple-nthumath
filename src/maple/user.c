@@ -702,3 +702,35 @@ u_xfile()
   x_file(M_UFILES, &desc[i], &path[i]);
   return 0;
 }
+
+int
+a_artfile()
+{
+ static char *desc[] =
+ {
+   "開頭畫面(０)",
+   "開頭畫面(１)",
+   "開頭畫面(２)",
+   "歡迎畫面",
+   "再見畫面",
+   "生日上站畫面",
+   "文章發表綱領",
+   "樂透歡迎畫面",
+   NULL
+ };
+
+ static char *path[] =
+ {
+   "gem/@/@opening.0",
+   "gem/@/@opening.1",
+   "gem/@/@opening.2",
+   "gem/@/@welcome",
+   "gem/@/@goodbye",
+   "gem/@/@birthday",
+   "gem/@/@post",
+   "etc/game/lottery.main",
+ };
+
+ x_file(M_XFILES, desc, path);
+ return 0;
+}

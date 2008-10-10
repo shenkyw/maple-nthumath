@@ -191,6 +191,7 @@ int u_setup(void);
 int u_lock(void);
 int u_log(void);
 int u_xfile(void);
+int a_artfile();
 
 /* visio.c */
 int is_zhc_low(char *str, int pos);

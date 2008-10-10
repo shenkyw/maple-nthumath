@@ -638,6 +638,9 @@ static MENU menu_user[] =
   u_log, PERM_BASIC, M_UFILES,
   "ViewLog    《 上站記錄 》",
 
+  a_artfile, PERM_ART, M_SYSTEM,
+  "Art        《 美工管理 》",
+
   menu_main, PERM_MENU + 'H', M_UMENU,
   "個人設定"
 };
