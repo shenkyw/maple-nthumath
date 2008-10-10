@@ -43,8 +43,8 @@
 #define BBSHOME		"/home/bbs"		/* BBS 的家 */
 #define BAKPATH		"/home/bbs/bak"		/* 備份檔的路徑 */
 
-#define BBSUID		1002
-#define BBSGID		1003			/* Linux 請設為 999 */
+#define BBSUID		1001
+#define BBSGID		1001			/* Linux 請設為 999 */
 
 
 /* ----------------------------------------------------- */
