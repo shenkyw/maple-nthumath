@@ -12,7 +12,7 @@
 # ------------------------------------------------------ #
 
 
-EXE =	ats2bmw ats2brd ats2gem ats2mf ats2pal ats2usr 
+EXE =	ats2bmw ats2brd ats2gem ats2mf ats2pal ats2usr brd2gem transacct transbrd
 
 all: linux
 #	@echo "Please enter 'make sys-type', "
