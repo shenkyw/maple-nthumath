@@ -1,0 +1,38 @@
+# ------------------------------------------------------ #
+#  Makefile	( NTHU CS MapleBBS Ver 3.10 )		 #
+# ------------------------------------------------------ #
+#  author : itoc.bbs@bbs.tnfsh.tn.edu.tw		 #
+#  target : Makefile for PIP GAME main programs		 #
+#  create : 01/07/24				 	 #
+#  update :   /  /					 #
+# ------------------------------------------------------ #
+
+
+# ------------------------------------------------------ #
+# 下列的 make rules 不需修改				 #
+# ------------------------------------------------------ #
+
+
+OBJ =	pip_basic.o pip_ending.o pip_fight.o pip_item.o pip_job.o \
+	pip_menu.o pip_pk.o pip_play.o pip_prac.o pip_quest.o pip_race.o \
+	pip_royal.o pip_stuff.o pip_visio.o pip_weapon.o pip.o
+
+
+SO =	pip.so
+
+
+all:
+	@$(MAKE) CC=@CC@ CFLAGS="-DLINUX @CFLAGS@ -pipe -fomit-frame-pointer -Wunused -I../include" $(SO)
+
+pip.so: $(OBJ)
+	ld -s -G $(OBJ) -o pip.so -L../lib -ldao
+
+
+install: $(SO)
+	install -m 0700 $? $(HOME)/bin
+
+install-deb: $(SO)
+	install -m 0700 -o @BBSUID@ $? @DESTDIR@/bin
+	
+clean:
+	rm -f $(SO) *.o *~

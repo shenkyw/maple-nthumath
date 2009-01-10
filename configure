@@ -1,0 +1,5 @@
+#!/bin/bash
+
+CC	= gcc-3.3
+CFLAGS	= -O2
+BBSUID = 1002
