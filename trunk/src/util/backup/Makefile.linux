@@ -1,0 +1,32 @@
+# ------------------------------------------------------- #
+#  util/Makefile	( NTHU CS MapleBBS Ver 3.10 )	  #
+# ------------------------------------------------------- #
+#  target : Makefile for 寄信、統計、備份、系統維護工具	  #
+#  create : 95/03/29				 	  #
+#  update : 95/12/15				 	  #
+# ------------------------------------------------------- #
+
+
+# ------------------------------------------------------ #
+# 下列的 make rules 不需修改				 #
+# ------------------------------------------------------ #
+
+
+EXE =	backupacct backupbrd backupgem backupoth backupusr restoreacct restorebrd restoregem restoreusr
+
+
+all:
+	@$(MAKE) CC=@CC@ CFLAGS="@CFLAGS@ -pipe -I../../include -fomit-frame-pointer -Wunused" LDFLAGS="-s -L../../lib -ldao" $(EXE)
+
+
+.c:	;  $(CC) -o $@ $@.c $(CFLAGS) $(LDFLAGS)
+
+
+install: $(EXE)
+	install -m 0700 $? $(HOME)/bin
+
+install-deb: $(EXE)
+	install -m 0700 -o @BBSUID@ $? @DESTDIR@/bin
+
+clean:
+	rm -f $(EXE) *.exe *.o *~
