@@ -219,10 +219,10 @@ COLOR1 " 轉信設定 " COLOR2 " (↑/↓)上下 (PgUp/PgDn)上下頁 (Home/End)首尾 (←)(q
 /* itoc: 建議 banner 不要超過三行，過長的站簽可能會造成某些使用者的反感 */
 
 #define EDIT_BANNER	"\n--\n" \
-			" \033[1;41m╔\033[44m╗\033[m O\033[1mri\033[30mgi\033[mn: \033[1;42m "SCHOOLNAME"˙"BBSNAME" \033[44m "MYHOSTNAME" \033[m\n" \
-			" \033[1;42m╚\033[45m╝\033[m Au\033[1mt\033[30mho\033[mr: \033[1;32m%s\033[m 從 \033[1;35m%s\033[m 發表\n"
+			" \033[mOrigin: \033[1;32;40m"SCHOOLNAME"˙"BBSNAME"\033[m  DN: \033[1;31;40m"MYHOSTNAME"\033[m\n" \
+			" Author: \033[0;32;40m%s\033[1;33;40m\033[m  From:\033[m \033[0;33;40m%s\033[m\n"
 
-#define MODIFY_BANNER	" \033[1;43m╱\033[46m╲\033[m \033[1mMo\033[30mdi\033[mfy: %s 於 \033[1;32m%s\033[m 修改\n"
+#define MODIFY_BANNER	" <\033[1;36mModified by \033[31m%s\033[36m at \033[33m%s\033[m>\n"
 
 
 /* ----------------------------------------------------- */
