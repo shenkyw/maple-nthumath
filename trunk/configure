@@ -14,6 +14,6 @@ sed -e "s%@CFLAGS@%${CFLAGS}%g" > $SRC_DIR/lib/Makefile
 for loc in daemon innbbsd maple so game pip util util/backup util/tran util/uno; do
 	sed -e "s%@CC@%${CC}%g" $SRC_DIR/$loc/Makefile.$SYSTYPE |\
 	sed -e "s%@CFLAGS@%${CFLAGS}%g" |\
-	sed -e "s%@BBSUID@%${BBSUID}%g" > $SRC_DIR/$loc/Makefile
+	sed -e "s%@BBSUID@%${BBSUID}%g" |\
 	sed -e "s%@DESTDIR@%${DESTDIR}%g" > $SRC_DIR/$loc/Makefile
 done
