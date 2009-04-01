@@ -3,6 +3,7 @@
 CC="gcc-3.3"
 CFLAGS=" -O2"
 BBSUID="1002"
+DESTDIR=$HOME
 
 SRC_DIR="./src"
 SYSTYPE="linux"
@@ -14,4 +15,5 @@ for loc in daemon innbbsd maple so game pip util util/backup util/tran util/uno;
 	sed -e "s%@CC@%${CC}%g" $SRC_DIR/$loc/Makefile.$SYSTYPE |\
 	sed -e "s%@CFLAGS@%${CFLAGS}%g" |\
 	sed -e "s%@BBSUID@%${BBSUID}%g" > $SRC_DIR/$loc/Makefile
+	sed -e "s%@DESTDIR@%${DESTDIR}%g" > $SRC_DIR/$loc/Makefile
 done
